@@ -33,6 +33,6 @@ FROM insights
 {% if is_incremental() -%}
 
   -- this filter will only be applied on an incremental run
-where date >= (select max(date)-7 from {{ this }})
+where date >= (select max(date)-30 from {{ this }})
 
 {% endif %}
