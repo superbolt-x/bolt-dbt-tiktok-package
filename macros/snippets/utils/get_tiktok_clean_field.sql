@@ -1,4 +1,4 @@
-{%- macro get_clean_field(table_name, column_name) -%}
+{%- macro get_tiktok_clean_field(table_name, column_name) -%}
 
     {# /* Apply to all tables */ #}
 

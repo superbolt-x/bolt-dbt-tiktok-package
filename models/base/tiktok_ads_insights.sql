@@ -26,7 +26,7 @@
 ]
 -%}
 
-{%- set stg_fields = adapter.get_columns_in_relation(ref('_stg_ads_insights'))
+{%- set stg_fields = adapter.get_columns_in_relation(ref('_stg_tiktok_ads_insights'))
                     |map(attribute="name")
                     |reject("in",exclude_fields)
                     -%}  
@@ -53,7 +53,7 @@ WITH
         {%- endif -%}
         {%- if not loop.last %},{%- endif %}
         {%- endfor %}
-    FROM {{ ref('_stg_ads_insights') }}
+    FROM {{ ref('_stg_tiktok_ads_insights') }}
     {%- if var('currency') != 'USD' %}
     LEFT JOIN currency USING(date)
     {%- endif %}
@@ -61,17 +61,17 @@ WITH
 
     ads AS 
     (SELECT ad_id, adgroup_id, ad_name, ad_status
-    FROM {{ ref('ads') }}
+    FROM {{ ref('tiktok_ads') }}
     ),
 
     adgroups AS 
     (SELECT adgroup_id, campaign_id, adgroup_name, adgroup_status
-    FROM {{ ref('adgroups') }}
+    FROM {{ ref('tiktok_adgroups') }}
     ),
 
     campaigns AS 
     (SELECT campaign_id, campaign_name, campaign_status
-    FROM {{ ref('campaigns') }}
+    FROM {{ ref('tiktok_campaigns') }}
     )
 
 SELECT *

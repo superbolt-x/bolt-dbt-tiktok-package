@@ -20,7 +20,7 @@
 WITH insights AS 
     (SELECT 
         {%- for field in fields if ("cost_per" not in field and "_rate" not in field) %}
-        {{ get_clean_field(table_name, field) }}
+        {{ get_tiktok_clean_field(table_name, field) }}
         {%- if not loop.last %},{%- endif %}
         {%- endfor %}
     FROM {{ source(schema_name, table_name) }}
@@ -33,6 +33,6 @@ FROM insights
 {% if is_incremental() -%}
 
   -- this filter will only be applied on an incremental run
-where date >= (select max(date)-7 from {{ this }})
+where date >= (select max(date)-30 from {{ this }})
 
 {% endif %}

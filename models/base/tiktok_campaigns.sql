@@ -1,22 +1,20 @@
 {%- set selected_fields = [
-    "ad_id",
-    "adgroup_id",
+    "campaign_id",
     "advertiser_id",
-    "ad_name",
+    "campaign_name",
     "status",
-    "ad_text",
-    "landing_page_url",
+    "budget",
     "updated_at"
 ] -%}
-{%- set schema_name, table_name = 'tiktok_raw', 'ads' -%}
+{%- set schema_name, table_name = 'tiktok_raw', 'campaigns' -%}
 
 WITH staging AS 
     (SELECT
     
         {% for field in selected_fields -%}
-        {{ get_clean_field(table_name, field) }},
+        {{ get_tiktok_clean_field(table_name, field) }},
         {% endfor -%}
-        MAX(updated_at) OVER (PARTITION BY ad_id) as last_updated_at
+        MAX(updated_at) OVER (PARTITION BY campaign_id) as last_updated_at
 
     FROM {{ source(schema_name, table_name) }}
     )

@@ -20,7 +20,7 @@ sources:
         identifier: campaign_history
 
 models:
-  - name: ads_insights 
+  - name: tiktok_ads_insights 
     columns:
       - name: unique_key
         tests: 
