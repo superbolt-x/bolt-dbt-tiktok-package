@@ -4,7 +4,7 @@ sources:
   - name: tiktok_raw
     schema: tiktok_raw
     tables:
-      - name: ads_insights
+      - name: ad_report_daily
         identifier: ad_report_daily
       
         freshness: 
