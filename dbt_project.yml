@@ -32,13 +32,9 @@ vars:
 
 models:
   bolt_dbt_tiktok_package:
-    # Config indicated by + and applies to all files under models/example/
     base:
       +schema: tiktok_base
       +materialized: table
-
-      ads_previews:
-        +enabled: false
 
     reporting:
       +schema: reporting
