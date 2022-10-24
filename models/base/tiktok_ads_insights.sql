@@ -5,6 +5,7 @@
 -%}
 
 {%- set exclude_fields = [
+    "_fivetran_synced",
     "total_sales_lead",
     "secondary_goal_result",
     "video_views_p_25",
@@ -57,25 +58,8 @@ WITH
     {%- if var('currency') != 'USD' %}
     LEFT JOIN currency USING(date)
     {%- endif %}
-    ),
-
-    ads AS 
-    (SELECT ad_id, adgroup_id, ad_name, ad_status
-    FROM {{ ref('tiktok_ads') }}
-    ),
-
-    adgroups AS 
-    (SELECT adgroup_id, campaign_id, adgroup_name, adgroup_status
-    FROM {{ ref('tiktok_adgroups') }}
-    ),
-
-    campaigns AS 
-    (SELECT campaign_id, campaign_name, campaign_status
-    FROM {{ ref('tiktok_campaigns') }}
     )
 
-SELECT *
+SELECT *,
+    {{ get_date_parts('date') }}
 FROM insights 
-LEFT JOIN ads USING(ad_id)
-LEFT JOIN adgroups USING(adgroup_id)
-LEFT JOIN campaigns USING(campaign_id)
