@@ -1,17 +1,20 @@
 version: 2
 
 sources:
+  - name: supermetrics_raw
+    schema: supermetrics_raw
+    tables:
+      - name: ad_report_daily
+        identifier: tik_ad
+      
+        freshness: 
+          warn_after: {count: 2, period: day}
+
+        loaded_at_field: date
+
   - name: tiktok_raw
     schema: tiktok_raw
     tables:
-      - name: ad_report_daily
-        identifier: ad_report_daily
-      
-        freshness: 
-          warn_after: {count: 24, period: hour}
-
-        loaded_at_field: _fivetran_synced
-
       - name: ads
         identifier: ad_history
       - name: adgroups
