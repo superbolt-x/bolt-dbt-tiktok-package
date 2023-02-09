@@ -5,8 +5,8 @@
     {%- if column_name == 'date' -%}
         {{column_name}}::date as date
         
-    {%- elif column_name in ('conversion','total_purchase') -%}
-        {{column_name}} as {{column_name}}s
+    {%- elif column_name in ('purchase_events') -%}
+        {{column_name}} as purchases
     
     {#- /*  End  */ -#}
 
