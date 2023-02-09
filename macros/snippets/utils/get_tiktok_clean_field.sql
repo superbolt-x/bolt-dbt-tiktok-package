@@ -2,7 +2,7 @@
 
     {# /* Apply to all tables */ #}
 
-    {%- if column_name == 'stat_time_day' -%}
+    {%- if column_name == 'date' -%}
         {{column_name}}::date as date
         
     {%- elif column_name in ('conversion','total_purchase') -%}
