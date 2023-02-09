@@ -1,29 +1,42 @@
 {%- set currency_fields = [
-    "spend",
-    "total_purchase_value"
+    "cost",
+    "level_achieve_value",
+    "add_billing_value",
+    "add_to_wishlist_value",
+    "app_add_to_cart_value",
+    "button_click_consultation_value",
+    "button_click_value",
+    "checkout_value",
+    "total_complete_payment_value",
+    "complete_tutorial_value",
+    "consultation_value",
+    "create_role_value",
+    "create_group_value",
+    "download_detail_page_value",
+    "download_button_value",
+    "form_button_clicks_value",
+    "form_detail_page_browse_value",
+    "form_submission_value",
+    "in_app_ad_click_value",
+    "in_app_ad_impressions_value",
+    "initiate_checkout_value",
+    "join_group_value",
+    "web_place_order_value",
+    "online_consultation_value",
+    "page_browse_consultation_value",
+    "page_search_value",
+    "product_details_page_browse_value",
+    "purchase_value",
+    "spend_credits_value",
+    "subscribe_value",
+    "unlock_achievement_value",
+    "user_registration_value",
+    "view_content_value",
+    "web_add_to_cart_value"
 ]
 -%}
 
 {%- set exclude_fields = [
-    "_fivetran_synced",
-    "total_sales_lead",
-    "secondary_goal_result",
-    "video_views_p_25",
-    "video_views_p_75",
-    "profile_visits",
-    "skan_total_sales_lead",
-    "skan_total_sales_lead_value",
-    "likes",
-    "comments",
-    "video_views_p_50",
-    "video_watched_2_s",
-    "skan_sales_lead",
-    "follows",
-    "video_watched_6_s",
-    "shares",
-    "total_sales_lead_value",
-    "skan_conversion",
-    "average_video_play_per_user"
 ]
 -%}
 
