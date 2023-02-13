@@ -7,6 +7,9 @@ sources:
       - name: ad_report_daily
         identifier: tik_ad
       
+      - name: campaign_report_daily
+        identifier: tik_campaign
+      
         freshness: 
           warn_after: {count: 2, period: day}
 
@@ -24,6 +27,13 @@ sources:
 
 models:
   - name: tiktok_ads_insights 
+    columns:
+      - name: unique_key
+        tests: 
+          - unique
+          - not_null
+          
+  - name: tiktok_campaigns_insights 
     columns:
       - name: unique_key
         tests: 
