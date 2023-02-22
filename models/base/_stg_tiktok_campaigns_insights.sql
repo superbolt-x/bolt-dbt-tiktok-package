@@ -31,7 +31,7 @@
 
 WITH insights AS 
     (SELECT 
-        {%- for field in fields if ("cost_per" not in field and "_rate" not in field) %}
+        {%- for field in fields if ("cost_per" not in field) %}
         {{ get_tiktok_clean_field(table_name, field) }}
         {%- if not loop.last %},{%- endif %}
         {%- endfor %}
@@ -82,7 +82,7 @@ cleaned_insights AS
         total_button_click_value as button_click_value,
         total_checkout as checkout_events,
         total_checkout_value as checkout_value,
-        total_complete_payment_rate as total_complete_payment_value,
+        total_complete_payment_rate as complete_payment_value,
         total_complete_tutorial as complete_tutorial_events,
         total_complete_tutorial_value as complete_tutorial_value,
         total_consultation_value as consultation_value,
