@@ -5,10 +5,10 @@ sources:
     schema: supermetrics_raw
     tables:
       - name: ad_report_daily
-        identifier: tik_ad
+        identifier: tik_ads_insights
       
       - name: campaign_report_daily
-        identifier: tik_campaign
+        identifier: tik_campaigns_insights
       
         freshness: 
           warn_after: {count: 2, period: day}
