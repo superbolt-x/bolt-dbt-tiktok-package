@@ -115,6 +115,7 @@ cleaned_insights AS
         initiate_checkout as initiate_checkout_events,
         likes as paid_likes,
         on_web_order as web_place_order_events,
+        on_web_subscribe as web_subscribe_events,
         online_consult as online_consultation_events,
         page_browse_consultation as page_browse_consultation_events,
         page_browse_view as page_browse_events,
