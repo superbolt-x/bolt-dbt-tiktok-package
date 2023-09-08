@@ -173,7 +173,7 @@ cleaned_insights AS
         total_purchase as purchase_events,
         total_purchase_value as purchase_value,
         total_registration as registration_events,
-        total_search as search_events,
+        page_event_search as search_events,
         total_spend_credits as spend_credits_events,
         total_spend_credits_value as spend_credits_value,
         total_start_trial as start_trial_events,
