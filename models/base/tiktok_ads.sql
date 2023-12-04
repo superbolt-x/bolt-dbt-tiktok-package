@@ -3,7 +3,7 @@
     "adgroup_id",
     "advertiser_id",
     "ad_name",
-    "secondary_status",
+    "status",
     "ad_text",
     "landing_page_url",
     "updated_at"
