@@ -2,7 +2,7 @@
     "campaign_id",
     "advertiser_id",
     "campaign_name",
-    "status" as campaign_status,
+    "status",
     "budget",
     "updated_at"
 ] -%}
