@@ -2,8 +2,8 @@
     "campaign_id",
     "advertiser_id",
     "campaign_name",
-    "secondary_status",
-    "budget",
+    "campaign_status",
+    "campaign_budget",
     "updated_at"
 ] -%}
 {%- set schema_name, table_name = 'tiktok_raw', 'campaigns' -%}
