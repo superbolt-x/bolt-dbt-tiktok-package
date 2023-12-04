@@ -3,7 +3,7 @@
     "campaign_id",
     "advertiser_id",
     "adgroup_name",
-    "status" as "ad_group_status",
+    "status" as ad_group_status,
     "budget",
     "updated_at"
 ] -%}
