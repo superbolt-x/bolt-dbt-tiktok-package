@@ -42,7 +42,7 @@ cleaned_insights AS
     (SELECT
         campaign_id,
         date,
-        region,
+        province_name as region,
         add_billing as add_billing_events,
         app_install as app_install_events,
         button_click as button_click_events,
