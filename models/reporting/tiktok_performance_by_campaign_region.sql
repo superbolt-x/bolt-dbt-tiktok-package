@@ -1,11 +1,11 @@
 {{ config (
-    alias = target.database + '_tiktok_performance_by_ad_region'
+    alias = target.database + '_tiktok_performance_by_campaign_region'
 )}}
 
 {%- set date_granularity_list = ['day','week','month','quarter','year'] -%}
 {%- set exclude_fields = ['date','day','week','month','quarter','year','last_updated','unique_key'] -%}
-{%- set dimensions = ['ad_id','region'] -%}
-{%- set measures = adapter.get_columns_in_relation(ref('tiktok_ads_insights_region'))
+{%- set dimensions = ['campaign_id','region'] -%}
+{%- set measures = adapter.get_columns_in_relation(ref('tiktok_campaigns_insights_region'))
                     |map(attribute="name")
                     |reject("in",exclude_fields)
                     |reject("in",dimensions)
@@ -26,19 +26,9 @@ WITH
         COALESCE(SUM("{{ measure }}"),0) as "{{ measure }}"
         {%- if not loop.last %},{%- endif %}
         {% endfor %}
-    FROM {{ ref('tiktok_ads_insights_region') }}
+    FROM {{ ref('tiktok_campaigns_insights_region') }}
     GROUP BY {{ range(1, dimensions|length +2 +1)|list|join(',') }}),
     {%- endfor %}
-
-    ads AS 
-    (SELECT ad_id::VARCHAR as ad_id, adgroup_id::VARCHAR as adgroup_id, ad_name, secondary_status as ad_status
-    FROM {{ ref('tiktok_ads') }}
-    ),
-
-    adgroups AS 
-    (SELECT adgroup_id::VARCHAR as adgroup_id, campaign_id::VARCHAR as campaign_id, adgroup_name, secondary_status as adgroup_status
-    FROM {{ ref('tiktok_adgroups') }}
-    ),
 
     campaigns AS 
     (SELECT campaign_id::VARCHAR as campaign_id, campaign_name, secondary_status as campaign_status
@@ -57,6 +47,4 @@ FROM
 
     {%- endfor %}
     )
-LEFT JOIN ads USING(ad_id)
-LEFT JOIN adgroups USING(adgroup_id)
 LEFT JOIN campaigns USING(campaign_id)
