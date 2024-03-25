@@ -7,7 +7,7 @@
 ]
 -%}
 
-{%- set stg_fields = adapter.get_columns_in_relation(ref('_stg_tiktok_ads_insights_region'))
+{%- set stg_fields = adapter.get_columns_in_relation(ref('_stg_tiktok_campaigns_insights_region'))
                     |map(attribute="name")
                     |reject("in",exclude_fields)
                     -%}  
@@ -34,7 +34,7 @@ WITH
         {%- endif -%}
         {%- if not loop.last %},{%- endif %}
         {%- endfor %}
-    FROM {{ ref('_stg_tiktok_ads_insights_region') }}
+    FROM {{ ref('_stg_tiktok_campaigns_insights_region') }}
     {%- if var('currency') != 'USD' %}
     LEFT JOIN currency USING(date)
     {%- endif %}
