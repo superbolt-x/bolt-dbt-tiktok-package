@@ -12,6 +12,9 @@ sources:
       
       - name: campaign_report_daily
         identifier: tik_campaigns_insights
+
+      - name: campaign_report_daily_region
+        identifier: tik_campaigns_insights_region
       
         freshness: 
           warn_after: {count: 2, period: day}
