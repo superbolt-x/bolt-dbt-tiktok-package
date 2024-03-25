@@ -3,7 +3,7 @@
         unique_key='unique_key'
 ) }}
 
-{%- set schema_name, table_name = 'supermetrics_raw', 'ad_report_daily_region' -%}
+{%- set schema_name, table_name = 'supermetrics_raw', 'campaign_report_daily_region' -%}
 
 {%- set exclude_fields = [
    "ad_group_id",
@@ -30,7 +30,7 @@ WITH insights AS
 
 cleaned_insights AS 
     (SELECT 
-        ad_id,
+        campaign_id,
         region,
         date,
         clicks as clicks,
@@ -40,7 +40,7 @@ cleaned_insights AS
 
 SELECT *,
     MAX(date) over () as last_updated,
-    ad_id||'_'||region||'_'||date as unique_key
+    campaign_id||'_'||region||'_'||date as unique_key
 FROM cleaned_insights
 {% if is_incremental() -%}
 
