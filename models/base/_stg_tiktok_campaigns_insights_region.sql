@@ -42,6 +42,8 @@ cleaned_insights AS
     (SELECT
         campaign_id,
         date,
+        country_name as country,
+        country_code,
         province_name as region,
         clicks as clicks,
         cost as cost,
