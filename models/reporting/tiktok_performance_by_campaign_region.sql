@@ -4,7 +4,7 @@
 
 {%- set date_granularity_list = ['day','week','month','quarter','year'] -%}
 {%- set exclude_fields = ['date','day','week','month','quarter','year','last_updated','unique_key'] -%}
-{%- set dimensions = ['campaign_id','region'] -%}
+{%- set dimensions = ['campaign_id','region','country','country_code'] -%}
 {%- set measures = adapter.get_columns_in_relation(ref('tiktok_campaigns_insights_region'))
                     |map(attribute="name")
                     |reject("in",exclude_fields)
