@@ -49,7 +49,7 @@ cleaned_insights AS
         comments as paid_comments,
         complete_payment as complete_payment_events,
         consultation as consultation_events,
-        conversions as conversions,
+        conversion as conversions,
         cost as cost,
         download_detail as download_detail_page_events,
         follows as paid_follows,
@@ -137,7 +137,8 @@ cleaned_insights AS
         video_views_p75 as video_views_p75,
         video_watched_2s as video_watched_2s,
         video_watched_6s as video_watched_6s,
-        web_event_add_to_cart as web_add_to_cart_events
+        web_event_add_to_cart as web_add_to_cart_events,
+        onsite_on_web_cart
      FROM insights)
      
 SELECT *,
