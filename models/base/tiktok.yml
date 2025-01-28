@@ -10,8 +10,8 @@ sources:
       - name: ad_report_daily_age
         identifier: tik_ads_insights_age
       
---      - name: campaign_report_daily
---        identifier: tik_campaigns_insights
+#      - name: campaign_report_daily
+#        identifier: tik_campaigns_insights
 
       - name: campaign_report_daily_region
         identifier: tik_campaign_insights_region
