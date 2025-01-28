@@ -3,7 +3,7 @@
         unique_key='unique_key'
 ) }}
 
-{%- set schema_name, table_name = 'tiktok_raw', 'ad_report_daily' -%}
+{%- set schema_name, table_name = 'supermetrics_raw', 'ad_report_daily' -%}
 
 {%- set exclude_fields = [
    "ad_group_id",
@@ -95,23 +95,23 @@ WITH insights AS
     ),
 
 cleaned_insights AS 
-    (SELECT
-        campaign_id,
+    (SELECT 
+        ad_id,
         date,
         add_billing as add_billing_events,
         app_install as app_install_events,
         button_click as button_click_events,
-        clicks,
+        clicks as clicks,
         comments as paid_comments,
         complete_payment as complete_payment_events,
         consultation as consultation_events,
-        conversion as conversions,
-        cost,
+        conversions as conversions,
+        cost as cost,
         download_detail as download_detail_page_events,
         follows as paid_follows,
         form as form_submission_events,
         form_detail as form_detail_page_browse_events,
-        impressions,
+        impressions as impressions,
         initiate_checkout as initiate_checkout_events,
         likes as paid_likes,
         on_web_order as web_place_order_events,
@@ -122,10 +122,10 @@ cleaned_insights AS
         product_details_page_browse as product_details_page_browse_events,
         profile_visits as paid_profile_visits,
         real_time_app_install as real_time_app_installs,
-        real_time_conversions,
-        real_time_results,
-        results,
-        secondary_goal_result,
+        real_time_conversions as real_time_conversions,
+        real_time_results as real_time_results,
+        results as results,
+        secondary_goal_result as secondary_goal_result,
         shares as paid_shares,
         total_achieve_level as level_achieve_events,
         total_achieve_level_value as level_achieve_value,
@@ -186,15 +186,14 @@ cleaned_insights AS
         total_view_content_value as view_content_value,
         total_web_event_add_to_cart_value as web_add_to_cart_value,
         user_registration as user_registration_events,
-        video_play_actions,
-        video_views_p100,
-        video_views_p25,
-        video_views_p50,
-        video_views_p75,
-        video_watched_2s,
-        video_watched_6s,
-        web_event_add_to_cart as web_add_to_cart_events,
-        onsite_on_web_cart
+        video_play_actions as video_play_actions,
+        video_views_p100 as video_views_p100,
+        video_views_p25 as video_views_p25,
+        video_views_p50 as video_views_p50,
+        video_views_p75 as video_views_p75,
+        video_watched_2s as video_watched_2s,
+        video_watched_6s as video_watched_6s,
+        web_event_add_to_cart as web_add_to_cart_events
      FROM insights)
 
 SELECT *,
