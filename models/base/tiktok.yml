@@ -4,9 +4,6 @@ sources:
   - name: supermetrics_raw
     schema: supermetrics_raw
     tables:
-      - name: ad_report_daily
-        identifier: tik_ads_insights
-
       - name: campaign_report_daily_region
         identifier: tik_campaign_insights_region
       
@@ -28,6 +25,8 @@ sources:
         identifier: campaign_report_daily
       - name: ad_report_daily_age
         identifier: ad_report_daily_age
+      - name: ad_report_daily
+        identifier: ad_report_daily
 
 models:
   - name: tiktok_ads_insights 
