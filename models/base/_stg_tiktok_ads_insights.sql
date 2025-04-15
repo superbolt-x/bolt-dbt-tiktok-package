@@ -3,7 +3,7 @@
         unique_key='unique_key'
 ) }}
 
-{%- set schema_name, table_name = 'supermetrics_raw', 'ad_report_daily' -%}
+{%- set schema_name, table_name = 'tiktok_raw', 'ad_report_daily' -%}
 
 {%- set exclude_fields = [
    "ad_group_id",
