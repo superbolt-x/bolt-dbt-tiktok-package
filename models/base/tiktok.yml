@@ -25,6 +25,8 @@ sources:
         identifier: campaign_report_daily
       - name: campaign_report_daily_age
         identifier: campaign_report_daily_age
+      - name: campaign_report_daily_region
+        identifier: campaign_report_daily_region
       - name: ad_report_daily_age
         identifier: ad_report_daily_age
       - name: ad_report_daily
