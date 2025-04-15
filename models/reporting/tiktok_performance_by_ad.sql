@@ -31,12 +31,12 @@ WITH
     {%- endfor %}
 
     ads AS 
-    (SELECT ad_id, adgroup_id::VARCHAR as adgroup_id, ad_name, secondary_status as ad_status
+    (SELECT ad_id, adgroup_id, ad_name, secondary_status as ad_status
     FROM {{ ref('tiktok_ads') }}
     ),
 
     adgroups AS 
-    (SELECT adgroup_id, campaign_id::VARCHAR as campaign_id, adgroup_name, secondary_status as adgroup_status
+    (SELECT adgroup_id, campaign_id, adgroup_name, secondary_status as adgroup_status
     FROM {{ ref('tiktok_adgroups') }}
     ),
 
