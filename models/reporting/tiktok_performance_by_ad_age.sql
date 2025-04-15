@@ -3,7 +3,7 @@
 )}}
 
 {%- set date_granularity_list = ['day','week','month','quarter','year'] -%}
-{%- set exclude_fields = ['date','day','week','month','quarter','year','last_updated','unique_key','secondaty_goal_result'] -%}
+{%- set exclude_fields = ['date','day','week','month','quarter','year','last_updated','unique_key','secondary_goal_result'] -%}
 {%- set dimensions = ['ad_id','age'] -%}
 {%- set measures = adapter.get_columns_in_relation(ref('tiktok_ads_insights_age'))
                     |map(attribute="name")
