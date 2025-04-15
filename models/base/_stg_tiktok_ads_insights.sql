@@ -87,7 +87,7 @@
 
 WITH insights AS 
     (SELECT 
-        {%- for field in fields if ("cost_per" not in field) %}
+        {%- for field in fields %}
         {{ get_tiktok_clean_field(table_name, field) }}
         {%- if not loop.last %},{%- endif %}
         {%- endfor %}
