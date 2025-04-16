@@ -4,6 +4,9 @@
 
     {%- if column_name == 'date' -%}
         {{column_name}}::date as date
+
+    {%- elif column_name == 'stat_time_day' -%}
+        {{column_name}}::date as date
     
     {#- /*  End  */ -#}
 
