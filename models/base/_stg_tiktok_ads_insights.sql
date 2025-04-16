@@ -120,7 +120,6 @@ cleaned_insights AS
         initiate_checkout_rate as initiate_checkout_value,
         likes as paid_likes,
         on_web_add_to_wishlist,
-        on_web_subscribe as subscribe_events,
         onsite_initiate_checkout_count,
         onsite_on_web_cart,
         onsite_on_web_cart_rate,
