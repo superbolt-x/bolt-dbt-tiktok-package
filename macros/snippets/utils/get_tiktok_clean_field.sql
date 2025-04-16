@@ -7,6 +7,9 @@
 
     {%- elif column_name == 'stat_time_day' -%}
         {{column_name}}::date as date
+
+    {%- elif column_name == 'spend' -%}
+        {{column_name}} as cost
     
     {#- /*  End  */ -#}
 
