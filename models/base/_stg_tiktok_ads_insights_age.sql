@@ -32,10 +32,10 @@ cleaned_insights AS
     (SELECT 
         ad_id,
         age,
-        stat_time_day as date,
-        clicks as clicks,
-        spend as cost,
-        impressions as impressions
+        date,
+        clicks,
+        spend,
+        impressions
      FROM insights)
 
 SELECT *,
