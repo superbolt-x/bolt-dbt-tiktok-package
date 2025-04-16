@@ -92,7 +92,7 @@ WITH insights AS
         {%- if not loop.last %},{%- endif %}
         {%- endfor %}
     FROM {{ source(schema_name, table_name) }}
-    ),
+    )
 
 SELECT *,
     MAX(date) over () as last_updated,
