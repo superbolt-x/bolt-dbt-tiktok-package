@@ -10,7 +10,8 @@
    "ad_group_name",
    "ad_name",
    "campaign_id",
-   "campaign_name"
+   "campaign_name",
+   "_fivetran_synced"
 ]
 -%}
 
