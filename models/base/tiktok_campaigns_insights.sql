@@ -1,5 +1,20 @@
 {%- set currency_fields = [
-    "cost"
+    "spend",
+    "add_to_wishlist_rate",
+    "app_event_add_to_cart_rate",
+    "checkout_rate",
+    "complete_payment_rate",
+    "download_start_rate",
+    "initiate_checkout_rate",
+    "onsite_on_web_cart_rate",
+    "onsite_on_web_detail_rate",
+    "onsite_shopping_rate",
+    "product_details_page_browse_rate",
+    "profile_visits_rate",
+    "purchase_rate",
+    "total_complete_payment_rate",
+    "view_content_rate",
+    "web_event_add_to_cart_rate"
 ]
 -%}
 
