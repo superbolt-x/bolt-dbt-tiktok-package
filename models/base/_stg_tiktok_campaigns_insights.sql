@@ -20,7 +20,8 @@
    "advertiser_timezone",
    "campaign_budget",
    "campaign_creation_date",
-   "campaign_name"
+   "campaign_name",
+   "_fivetran_synced"
 ]
 -%}
 
