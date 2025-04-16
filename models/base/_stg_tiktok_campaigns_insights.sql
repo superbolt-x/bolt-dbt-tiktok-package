@@ -41,7 +41,7 @@ WITH insights AS
 SELECT *,
     MAX(date) over () as last_updated,
     campaign_id||'_'||date as unique_key
-FROM cleaned_insights
+FROM insights
 {% if is_incremental() -%}
 
   -- this filter will only be applied on an incremental run
