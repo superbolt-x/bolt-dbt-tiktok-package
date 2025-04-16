@@ -46,7 +46,7 @@ cleaned_insights AS
         country_code,
         province_name as region,
         clicks,
-        spend,
+        cost,
         impressions
      FROM insights)
      
