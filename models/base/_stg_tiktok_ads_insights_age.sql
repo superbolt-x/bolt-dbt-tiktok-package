@@ -34,7 +34,7 @@ cleaned_insights AS
         age,
         date,
         clicks,
-        spend,
+        cost,
         impressions
      FROM insights)
 
