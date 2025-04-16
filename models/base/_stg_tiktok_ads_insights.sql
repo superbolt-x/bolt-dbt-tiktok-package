@@ -76,7 +76,8 @@
    "target_ios_osv",
    "target_languages",
    "target_operation_system",
-   "video_id"
+   "video_id",
+   "_fivetran_synced"
 ]
 -%}
 
