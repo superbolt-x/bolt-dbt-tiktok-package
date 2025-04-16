@@ -3,7 +3,7 @@
 )}}
 
 {%- set date_granularity_list = ['day','week','month','quarter','year'] -%}
-{%- set exclude_fields = ['date','day','week','month','quarter','year','last_updated','unique_key'] -%}
+{%- set exclude_fields = ['date','day','week','month','quarter','year','last_updated','unique_key','secondary_goal_result'] -%}
 {%- set dimensions = ['campaign_id'] -%}
 {%- set measures = adapter.get_columns_in_relation(ref('tiktok_campaigns_insights'))
                     |map(attribute="name")
@@ -31,7 +31,7 @@ WITH
     {%- endfor %}
 
     campaigns AS 
-    (SELECT campaign_id::VARCHAR as campaign_id, campaign_name, secondary_status as campaign_status
+    (SELECT campaign_id, campaign_name, secondary_status as campaign_status
     FROM {{ ref('tiktok_campaigns') }}
     )
 

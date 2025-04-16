@@ -4,9 +4,6 @@
 
     {%- if column_name == 'date' -%}
         {{column_name}}::date as date
-        
-    {%- elif column_name in ('purchase_events') -%}
-        {{column_name}} as purchases
     
     {#- /*  End  */ -#}
 

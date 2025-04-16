@@ -3,7 +3,7 @@
         unique_key='unique_key'
 ) }}
 
-{%- set schema_name, table_name = 'supermetrics_raw', 'ad_report_daily_age' -%}
+{%- set schema_name, table_name = 'tiktok_raw', 'ad_report_daily_age' -%}
 
 {%- set exclude_fields = [
    "ad_group_id",
@@ -32,9 +32,9 @@ cleaned_insights AS
     (SELECT 
         ad_id,
         age,
-        date,
+        stat_time_day as date,
         clicks as clicks,
-        cost as cost,
+        spend as cost,
         impressions as impressions
      FROM insights)
 
