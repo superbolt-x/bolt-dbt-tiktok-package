@@ -41,13 +41,13 @@ WITH insights AS
 cleaned_insights AS 
     (SELECT
         campaign_id,
-        stat_time_day as date,
+        date,
         country_name as country,
         country_code,
         province_name as region,
-        clicks as clicks,
-        spend as cost,
-        impressions as impressions
+        clicks,
+        spend,
+        impressions
      FROM insights)
      
 SELECT *,
