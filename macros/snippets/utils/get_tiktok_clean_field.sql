@@ -3,13 +3,13 @@
     {# /* Apply to all tables */ #}
 
     {%- if column_name == 'date' -%}
-        NULLIF({{column_name}}::date, '-') as date
+        CASE WHEN {{column_name}}::text = '-' THEN NULL ELSE {{column_name}}::date END as date
 
     {%- elif column_name == 'stat_time_day' -%}
-        NULLIF({{column_name}}::date, '-') as date
+        CASE WHEN {{column_name}}::text = '-' THEN NULL ELSE {{column_name}}::date END as date
 
     {%- elif column_name == 'spend' -%}
-        NULLIF({{column_name}}, '-') as cost
+        CASE WHEN {{column_name}}::text = '-' THEN NULL ELSE {{column_name}} END as cost
     
     {#- /*  End  */ -#}
 
@@ -18,31 +18,31 @@
     {%- elif table_name == 'ads' -%}
         
         {%- if column_name in ('call_to_action','status','create_time') -%}
-        NULLIF({{column_name}}, '-') as ad_{{column_name}}
+        CASE WHEN {{column_name}}::text = '-' THEN NULL ELSE {{column_name}} END as ad_{{column_name}}
         {%- else -%}
-        NULLIF({{column_name}}, '-')
+        CASE WHEN {{column_name}}::text = '-' THEN NULL ELSE {{column_name}} END
         {%- endif -%}
 
     {%- elif table_name == 'adgroups' -%}
         
         {%- if column_name in ('budget','optimize_goal','status','create_time') -%}
-        NULLIF({{column_name}}, '-') as adgroup_{{column_name}}
+        CASE WHEN {{column_name}}::text = '-' THEN NULL ELSE {{column_name}} END as adgroup_{{column_name}}
         {%- else -%}
-        NULLIF({{column_name}}, '-')
+        CASE WHEN {{column_name}}::text = '-' THEN NULL ELSE {{column_name}} END
         {%- endif -%}
 
     {%- elif table_name == 'campaigns' -%}
         
         {%- if column_name in ('budget','status','objective_type','create_time') -%}
-        NULLIF({{column_name}}, '-') as campaign_{{column_name}}
+        CASE WHEN {{column_name}}::text = '-' THEN NULL ELSE {{column_name}} END as campaign_{{column_name}}
         {%- else -%}
-        NULLIF({{column_name}}, '-')
+        CASE WHEN {{column_name}}::text = '-' THEN NULL ELSE {{column_name}} END
         {%- endif -%}
     
     {#- /*  End  */ -#}
 
     {%- else -%}
-    NULLIF({{column_name}}, '-')
+    CASE WHEN {{column_name}}::text = '-' THEN NULL ELSE {{column_name}} END
         
     {%- endif -%}
 
