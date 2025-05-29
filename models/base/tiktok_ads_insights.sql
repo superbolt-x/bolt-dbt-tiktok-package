@@ -43,7 +43,7 @@ WITH
     (SELECT 
         {%- for field in stg_fields -%}
         {%- if field in currency_fields or '_value' in field %}
-        "{{ field }}"::float/{{ exchange_rate }} as "{{ field }}"
+        COALESCE(TRY_CAST("{{ field }}" AS float), 0)/{{ exchange_rate }} as "{{ field }}"
         {%- else %}
         "{{ field }}"
         {%- endif -%}
