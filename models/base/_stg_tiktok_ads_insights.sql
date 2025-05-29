@@ -89,7 +89,7 @@
 WITH insights AS 
     (SELECT 
         {%- for field in fields %}
-        {{ get_tiktok_clean_field(table_name, field) }}
+        NULLIF({{ get_tiktok_clean_field(table_name, field) }}, '-') AS {{ field }}
         {%- if not loop.last %},{%- endif %}
         {%- endfor %}
     FROM {{ source(schema_name, table_name) }}
