@@ -34,7 +34,7 @@ models:
   bolt_dbt_tiktok_package:
     base:
       +schema: tiktok_base
-      +materialized: table
+      +materialized: ephemeral
 
     reporting:
       +schema: reporting
