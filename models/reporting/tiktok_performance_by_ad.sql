@@ -104,7 +104,7 @@ WITH
 
     {#- ad / adgroup / campaign metadata, built inline from the raw history tables
         (same logic as the tiktok_ads / tiktok_adgroups / tiktok_campaigns models) -#}
-    {%- set ad_fields = ['ad_id','adgroup_id','ad_name','secondary_status','updated_at'] -%}
+    {%- set ad_fields = ['ad_id','adgroup_id','advertiser_id','ad_name','secondary_status','updated_at'] -%}
     ads_staging AS
     (SELECT
         {% for field in ad_fields -%}
@@ -135,7 +135,7 @@ WITH
     ),
 
     ads AS
-    (SELECT ad_id, adgroup_id, ad_name, secondary_status as ad_status
+    (SELECT ad_id, adgroup_id, advertiser_id, ad_name, secondary_status as ad_status
     FROM ads_staging
     WHERE updated_at = last_updated_at),
 
