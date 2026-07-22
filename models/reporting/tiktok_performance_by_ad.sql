@@ -1,22 +1,48 @@
 {{ config (
-    alias = target.database + '_tiktok_performance_by_ad'
+    alias = target.database + '_tiktok_performance_by_ad',
+    materialized = 'incremental',
+    unique_key = 'unique_key',
+    incremental_strategy = 'delete+insert',
+    on_schema_change = 'append_new_columns'
 )}}
+
+{#-
+    Ad performance, all date granularities in one table.
+
+    Reads the day-grain incremental feeder (tiktok_performance_by_ad_daily),
+    adds date parts, rolls up day/week/month/quarter/year, and joins ad / adgroup
+    / campaign metadata built inline from the raw history tables. This keeps the
+    tiktok_ads_insights / tiktok_ads / tiktok_adgroups / tiktok_campaigns models
+    out of this model's DAG so a selective run stays slim (mirrors the Facebook
+    performance_by_ad_daily + performance_by_ad pattern).
+-#}
 
 {%- set date_granularity_list = ['day','week','month','quarter','year'] -%}
 {%- set exclude_fields = ['date','day','week','month','quarter','year','last_updated','unique_key','secondary_goal_result','secondary_goal_result_rate','cost_per_secondary_goal_result','dpa_target_audience_type'] -%}
 {%- set dimensions = ['ad_id'] -%}
-{%- set measures = adapter.get_columns_in_relation(ref('tiktok_ads_insights'))
+{%- set measures = adapter.get_columns_in_relation(ref('tiktok_performance_by_ad_daily'))
                     |map(attribute="name")
                     |reject("in",exclude_fields)
                     |reject("in",dimensions)
                     |list
-                    -%}  
+                    -%}
 
-WITH 
+WITH
+    insights_stg AS
+    (SELECT *,
+        {{ get_date_parts('date') }}
+    FROM {{ ref('tiktok_performance_by_ad_daily') }}
+    {% if is_incremental() -%}
+    -- Reprocess whole periods from the start of the year containing (max date - 30d)
+    -- so the week/month/quarter/year roll-ups stay complete; older data is stable.
+    -- Run --full-refresh periodically to refresh ad-object names on historical rows.
+    WHERE date >= date_trunc('year', (select dateadd(day,-30,max(date)) from {{ ref('tiktok_performance_by_ad_daily') }}))::date
+    {%- endif %}
+    ),
+
     {%- for date_granularity in date_granularity_list %}
-
-    performance_{{date_granularity}} AS 
-    (SELECT 
+    performance_{{date_granularity}} AS
+    (SELECT
         '{{date_granularity}}' as date_granularity,
         {{date_granularity}} as date,
         {%- for dimension in dimensions %}
@@ -26,29 +52,66 @@ WITH
         COALESCE(SUM("{{ measure }}"),0) as "{{ measure }}"
         {%- if not loop.last %},{%- endif %}
         {% endfor %}
-    FROM {{ ref('tiktok_ads_insights') }}
+    FROM insights_stg
     GROUP BY {{ range(1, dimensions|length +2 +1)|list|join(',') }}),
     {%- endfor %}
 
-    ads AS 
+    {#- ad / adgroup / campaign metadata, built inline from the raw history tables
+        (same logic as the tiktok_ads / tiktok_adgroups / tiktok_campaigns models) -#}
+    {%- set ad_fields = ['ad_id','adgroup_id','ad_name','secondary_status','updated_at'] -%}
+    ads_staging AS
+    (SELECT
+        {% for field in ad_fields -%}
+        {{ get_tiktok_clean_field('ads', field) }},
+        {% endfor -%}
+        MAX(updated_at) OVER (PARTITION BY ad_id) as last_updated_at
+    FROM {{ source('tiktok_raw', 'ads') }}
+    ),
+
+    {%- set adgroup_fields = ['adgroup_id','campaign_id','adgroup_name','secondary_status','updated_at'] -%}
+    adgroups_staging AS
+    (SELECT
+        {% for field in adgroup_fields -%}
+        {{ get_tiktok_clean_field('adgroups', field) }},
+        {% endfor -%}
+        MAX(updated_at) OVER (PARTITION BY adgroup_id) as last_updated_at
+    FROM {{ source('tiktok_raw', 'adgroups') }}
+    ),
+
+    {%- set campaign_fields = ['campaign_id','campaign_name','secondary_status','updated_at'] -%}
+    campaigns_staging AS
+    (SELECT
+        {% for field in campaign_fields -%}
+        {{ get_tiktok_clean_field('campaigns', field) }},
+        {% endfor -%}
+        MAX(updated_at) OVER (PARTITION BY campaign_id) as last_updated_at
+    FROM {{ source('tiktok_raw', 'campaigns') }}
+    ),
+
+    ads AS
     (SELECT ad_id, adgroup_id, ad_name, secondary_status as ad_status
-    FROM {{ ref('tiktok_ads') }}
-    ),
+    FROM ads_staging
+    WHERE updated_at = last_updated_at),
 
-    adgroups AS 
+    adgroups AS
     (SELECT adgroup_id, campaign_id, adgroup_name, secondary_status as adgroup_status
-    FROM {{ ref('tiktok_adgroups') }}
-    ),
+    FROM adgroups_staging
+    WHERE updated_at = last_updated_at),
 
-    campaigns AS 
+    campaigns AS
     (SELECT campaign_id, campaign_name, secondary_status as campaign_status
-    FROM {{ ref('tiktok_campaigns') }}
-    )
+    FROM campaigns_staging
+    WHERE updated_at = last_updated_at)
 
 SELECT *,
     {{ get_tiktok_default_campaign_types('campaign_name')}},
-    {{ get_tiktok_scoring_objects() }}
-FROM 
+    {{ get_tiktok_scoring_objects() }},
+    md5(
+        coalesce(date_granularity,'')||'|'||
+        coalesce(date::varchar,'')||'|'||
+        coalesce(ad_id::varchar,'')
+    ) as unique_key
+FROM
     ({% for date_granularity in date_granularity_list -%}
     SELECT *
     FROM performance_{{date_granularity}}
